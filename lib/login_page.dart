@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'validators.dart';
 import 'auth_errors.dart';
+import 'register_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -15,6 +16,7 @@ class _LoginPageState extends State<LoginPage> {
   final _passwordCtrl = TextEditingController();
   bool _loading = false;
   String? _error;
+
   Future<void> _signIn() async {
     if (!_formKey.currentState!.validate()) return;
     FocusScope.of(context).unfocus();
@@ -118,6 +120,20 @@ class _LoginPageState extends State<LoginPage> {
                   TextButton(
                     onPressed: _loading ? null : _resetPassword,
                     child: const Text('¿Olvidaste tu contraseña?'),
+                  ),
+
+                  // 👇👇👇 AGREGA ESTE BLOQUE DE NAVEGACIÓN
+                  TextButton(
+                    onPressed: _loading
+                        ? null
+                        : () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (_) => const RegisterPage(),
+                              ),
+                            );
+                          },
+                    child: const Text('¿No tienes cuenta? Regístrate'),
                   ),
                   const SizedBox(height: 8),
                   const _SmallPrint(),
